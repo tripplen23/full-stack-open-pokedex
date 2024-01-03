@@ -24,5 +24,6 @@ module.exports = {
     "arrow-spacing": ["error", { before: true, after: true }],
     "no-console": ["error", { allow: ["warn", "error"] }], // Allow console.warn and console.error
     "react/prop-types": 0,
+    "no-undef": "off",
   },
 };
