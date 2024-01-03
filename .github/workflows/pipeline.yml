@@ -10,8 +10,8 @@ jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
     steps:
-      - uses: action/checkout@v3 # Checkouts the project source code from Git
-      - uses: action/setup-node@v3
+      - uses: actions/checkout@v3 # Checkouts the project source code from Git
+      - uses: actions/setup-node@v3
         with:
           node-version: "16"
       - name: Install dependencies
