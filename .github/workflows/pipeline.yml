@@ -38,15 +38,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3 # Checkouts the project source code from Git
-      - name: Check commit message for 
-        run: |
-          if [[ $(echo "${{ github.event.commits.*.message }}" | grep -c '#skip') -gt 0 ]]; then
-            echo "Commit contains #skip. Skipping deployment and tagging."
-            exit 0
-          fi
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.64.0
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
