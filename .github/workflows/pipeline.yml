@@ -32,3 +32,7 @@ jobs:
           wait-on: 'http://localhost:5000'
           record: true
           parallel: true
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
