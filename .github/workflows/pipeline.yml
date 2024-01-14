@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3 # Checkouts the project source code from Git
-      - name: Check commit message for #skip
+      - name: Check commit message for 
         run: |
           if [[ $(echo "${{ github.event.commits.*.message }}" | grep -c '#skip') -gt 0 ]]; then
             echo "Commit contains #skip. Skipping deployment and tagging."
