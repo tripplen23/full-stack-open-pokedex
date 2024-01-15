@@ -33,6 +33,12 @@ jobs:
           record: true
           parallel: true
 
+      - name: Deploy to Render
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+
+
+
   tag_release:
     needs: [simple_deployment_pipeline] # TODO: this job must be done first
     runs-on: ubuntu-20.04
