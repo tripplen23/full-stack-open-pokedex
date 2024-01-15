@@ -37,10 +37,31 @@ jobs:
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
 
+  discord_success_message:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    if: success()
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          webhook: ${{secrets.DISCORD_WEBHOOK}}
+          nodetail: true
 
+  discord_failure_message:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    if: failure()
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          webhook: ${{secrets.DISCORD_WEBHOOK}}
+          detail: "commit ${{github.sha}} by ${{github.owner}} broke the build"
+          nodetail: true
 
   tag_release:
-    needs: [simple_deployment_pipeline] # TODO: this job must be done first
+    needs: [simple_deployment_pipeline, discord_success_message] # TODO: this job must be done first
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
