@@ -42,15 +42,13 @@ jobs:
     runs-on: ubuntu-20.04
     if: success()
     steps:
-      - name: Set Deployed URL
-        id: set_deployed_url
-        run: echo "::set-output name=url::https://pokedex-ci-cd-nbas.onrender.com/"  # Replace with the actual deployed URL
       - uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
-          description: "A new version of Pokedex deployed"
-          severity: Informational
-          text: "Deployed to ${{ needs.simple_deployment_pipeline.outputs.set_deployed_url }} by ${{ github.actor }}"
+          severity: info
+          text: "A new version of Pokedex deployed"
+          details: "Deployed to https://pokedex-ci-cd-nbas.onrender.com/ by ${{ github.actor }}"
+
 
   discord_failure_message:
     needs: [simple_deployment_pipeline]
@@ -59,10 +57,10 @@ jobs:
     steps:
       - uses: rjstone/discord-webhook-notify@v1
         with:
-          severity: Error
-          description: "Build failed"
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
-          text: "commit ${{github.sha}} by ${{github.actor}} broke the build :("
+          severity: error
+          text: "Build failed"
+          details: "commit ${{github.sha}} by ${{github.actor}} broke the build :("
 
   tag_release:
     needs: [simple_deployment_pipeline, discord_success_message] # TODO: this job must be done first
