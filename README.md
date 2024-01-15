@@ -2,14 +2,9 @@
 
 This repository is used for the CI/CD module of the Full stack open course
 
-Fork the repository to complete course exercises
+This repository is forked from the branch at smartlyio/full-stack-open-pokedex by tripplen23 aka Binh Duc Nguyen
 
-## Commands
+## URLs of submitted exercises in part 11
 
-Start by running `npm install` inside the project folder
-
-`npm start` to run the webpack dev server
-`npm test` to run tests
-`npm run eslint` to run eslint
-`npm run build` to make a production build
-`npm run start-prod` to run your production build
+[Pokedex project](https://github.com/tripplen23/full-stack-open-pokedex)
+[Blog List project](https://github.com/tripplen23/bloglist-ci-cd)
